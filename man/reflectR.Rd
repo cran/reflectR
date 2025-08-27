@@ -6,13 +6,15 @@
 \alias{reflectR-package}
 \title{Automatic Scoring of the Cognitive Reflection Test}
 \description{
-The reflectR package provides automated coding tools for open-ended responses
-to various forms of the Cognitive Reflection Test (CRT). This package facilitates
-the standardization of Cognitive Reflection Test responses analysis across
-large datasets in cognitive psychology, decision-making, and related fields.
-By automating the coding process, it not only reduces manual effort but also
-aims to reduce the variability introduced by subjective interpretation of
-open-ended responses, contributing to a more consistent and reliable analysis.
+The reflectR package provides functions for automatic coding of open-ended
+responses to several forms of the Cognitive Reflection Test (CRT). The CRT is
+widely used in cognitive psychology, decision-making research, and
+related fields to assess the tendency to override an initial intuitive
+(but incorrect) answer and engage in reflection to reach a correct solution.
+The package standardizes CRT response coding across datasets and supports
+different coding schemes. Automated coding reduces manual effort and improves
+reproducibility by limiting variability from subjective interpretation of
+open-ended responses.
 }
 \details{
 The package includes functions to code responses from:
@@ -29,7 +31,8 @@ The package includes functions to code responses from:
 
 While reflectR draws inspiration from the scientific literature on the CRT,
 it has been independently developed and does not hold any affiliation with
-the original authors of these tests.
+the original authors of these tests. This software is provided "as is", without
+any express or implied warranties of accuracy or reliability.
 }
 
 \section{Acknowledgments}{
@@ -37,8 +40,8 @@ the original authors of these tests.
 The development of this package benefited significantly from the kind insight
 and suggestion provided by Dr. Keela Thomson, whose contribution is gratefully
 acknowledged.
-Special thanks are also due to Dr. Paolo Giovanni Cicirelli,
-Prof. Marinella Paciello, Dr. Carmela Sportelli, and Prof. Francesca D'Errico.
+Special thanks are also due to Dr. Paolo Giovanni Cicirelli, Prof. Marinella Paciello,
+Dr. Carmela Sportelli, and Prof. Francesca D'Errico.
 Acknowledgment is also due to the European project STERHEOTYPES for funding
 the data collection that produced the datasets initially used for manual
 multi-rater coding of CRT-2 items.
@@ -62,6 +65,5 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Giuseppe Corbelli \email{giuseppe.corbelli@uninettunouniversity.net} (ORCID: 0000-0002-2864-3548)
-
+Giuseppe Corbelli (<giuseppe.corbelli@uninettunouniversity.net>)
 }
