@@ -1,7 +1,7 @@
 Package: reflectR
 Type: Package
 Title: Automatic Scoring of the Cognitive Reflection Test
-Version: 2.1.4
+Version: 2.2.0
 Authors@R: 
     person(
       "Giuseppe", "Corbelli", 
@@ -20,8 +20,8 @@ Suggests: spelling
 Language: en-US
 NeedsCompilation: no
 Maintainer: Giuseppe Corbelli <giuseppe.corbelli@uninettunouniversity.net>
-Packaged: 2025-08-27 08:54:20 UTC; giuse
+Packaged: 2026-09-30 13:19:35 UTC; giuse
 Author: Giuseppe Corbelli [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-2864-3548>)
 Repository: CRAN
-Date/Publication: 2025-08-27 09:10:14 UTC
+Date/Publication: 2026-09-30 17:10:02 UTC

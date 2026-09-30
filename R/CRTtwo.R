@@ -35,11 +35,13 @@
 
 CRTtwo <- function(item1 = NULL, item2 = NULL, item3 = NULL, item4 = NULL,
                      codingscheme = "categ", na.rm = TRUE) {
+  
+  codingscheme <- match.arg(codingscheme, c("categ", "sum", "mean"))
 
   CRTcoder1 <- function(risposta, na.rm) {
     risposta <- tolower(risposta)
-    regex.corretto <- "second|two|2"
-    regex.impulsivo <- "first|one|win|1"
+    regex.corretto <- "\\bsecond|\\b2nd\\b|(?<!ty[- ])\\btwo+(place)?\\b|(?<![\\d.,])2(?!\\d)"
+    regex.impulsivo <- "\\bfirst|\\b1st\\b|(?<!ty[- ])\\bone+(place)?\\b|\\bwin|(?<![\\d.,])1(?!\\d)"
     result <- integer(length(risposta))
     for (i in seq_along(risposta)) {
       if (is.na(risposta[i]) && !na.rm) {
@@ -59,8 +61,8 @@ CRTtwo <- function(item1 = NULL, item2 = NULL, item3 = NULL, item4 = NULL,
 
   CRTcoder2 <- function(risposta, na.rm) {
     risposta <- tolower(risposta)
-    regex.corretto <- "eight|8"
-    regex.impulsivo <- "seven|7"
+    regex.corretto <- "(?<!ty[- ])\\beight+(sheep)?\\b|(?<![\\d.,])8(?!\\d)"
+    regex.impulsivo <- "(?<!ty[- ])\\bseven+(sheep)?\\b|(?<![\\d.,])7(?!\\d)"
     result <- integer(length(risposta))
     for (i in seq_along(risposta)) {
       if (is.na(risposta[i]) && !na.rm) {
@@ -101,8 +103,8 @@ CRTtwo <- function(item1 = NULL, item2 = NULL, item3 = NULL, item4 = NULL,
 
   CRTcoder4 <- function(risposta, na.rm) {
     risposta <- tolower(risposta)
-    regex.corretto <- "0|zero|nothing|not|empty|doesnt|any|none|no|air|void"
-    regex.impulsivo <- "^(?!.*\\b(0|zero|nothing|not|empty|doesnt|any|none|no|air|void)\\b).*\\d+.*"
+    regex.corretto <- "\\b(0|zero+|nothing|none|empty|void|air)\\b|\\bno (dirt|soil|earth|sand)|\\bnot any\\b|n'?t (have |contain )?any\\b"
+    regex.impulsivo <- "^(?!.*(\\b(0|zero+|nothing|none|empty|void|air)\\b|\\bno (dirt|soil|earth|sand)|\\bnot any\\b|n'?t (have |contain )?any\\b)).*\\d"
     result <- integer(length(risposta))
     for (i in seq_along(risposta)) {
       if (is.na(risposta[i]) && !na.rm) {

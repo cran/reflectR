@@ -42,11 +42,13 @@
 CRTlong <- function(item1 = NULL, item2 = NULL, item3 = NULL, item4 = NULL,
                    item5 = NULL, item6 = NULL,
                      codingscheme = "categ", na.rm = TRUE) {
+  
+  codingscheme <- match.arg(codingscheme, c("categ", "sum", "mean"))
 
   CRTcoder1 <- function(risposta, na.rm) {
     risposta <- tolower(risposta)
-    regex.corretto <- "five|5"
-    regex.impulsivo <- "ten|10"
+    regex.corretto <- "(?<!ty[- ])\\bfive+(cents?|c)?\\b|(?<![\\d.,])(0?[.,]05|5)(?!\\d)"
+    regex.impulsivo <- "\\bten+(cents?|c)?\\b|(?<![\\d.,])(0?[.,]10?|10)(?!\\d)"
     result <- integer(length(risposta))
     for (i in seq_along(risposta)) {
       if (is.na(risposta[i]) && !na.rm) {
@@ -66,8 +68,8 @@ CRTlong <- function(item1 = NULL, item2 = NULL, item3 = NULL, item4 = NULL,
 
   CRTcoder2 <- function(risposta, na.rm) {
     risposta <- tolower(risposta)
-    regex.corretto <- "five|5"
-    regex.impulsivo <- "hundred|\\b100\\b"
+    regex.corretto <- "(?<!ty[- ])\\bfive+(minutes?|mins?)?\\b|(?<![\\d.,])5(?!\\d)"
+    regex.impulsivo <- "\\bhundred(minutes?|mins?)?\\b|(?<![\\d.,])100(?!\\d)"
     result <- integer(length(risposta))
     for (i in seq_along(risposta)) {
       if (is.na(risposta[i]) && !na.rm) {
@@ -87,8 +89,8 @@ CRTlong <- function(item1 = NULL, item2 = NULL, item3 = NULL, item4 = NULL,
 
   CRTcoder3 <- function(risposta, na.rm) {
     risposta <- tolower(risposta)
-    regex.corretto <- "fortyseven|forty-seven|forty seven|47"
-    regex.impulsivo <- "twentyfour|twenty-four|twenty four|24"
+    regex.corretto <- "\\bforty[- ]?seven|(?<![\\d.,])47(?!\\d)"
+    regex.impulsivo <- "\\btwenty[- ]?four|(?<![\\d.,])24(?!\\d)"
     result <- integer(length(risposta))
     for (i in seq_along(risposta)) {
       if (is.na(risposta[i]) && !na.rm) {
@@ -108,8 +110,8 @@ CRTlong <- function(item1 = NULL, item2 = NULL, item3 = NULL, item4 = NULL,
 
   CRTcoder4 <- function(risposta, na.rm) {
     risposta <- tolower(risposta)
-    regex.corretto <- "three|3"
-    regex.impulsivo <- "six|6"
+    regex.corretto <- "(?<!ty[- ])\\bthree+(elves)?\\b|(?<![\\d.,])3(?!\\d)"
+    regex.impulsivo <- "(?<!ty[- ])\\bsix+(elves)?\\b|(?<![\\d.,])6(?!\\d)"
     result <- integer(length(risposta))
     for (i in seq_along(risposta)) {
       if (is.na(risposta[i]) && !na.rm) {
@@ -129,8 +131,8 @@ CRTlong <- function(item1 = NULL, item2 = NULL, item3 = NULL, item4 = NULL,
 
   CRTcoder5 <- function(risposta, na.rm) {
     risposta <- tolower(risposta)
-    regex.corretto <- "twentynine|twenty-nine|twenty nine|29"
-    regex.impulsivo <- "thirty|30"
+    regex.corretto <- "\\btwenty[- ]?nine|(?<![\\d.,])29(?!\\d)"
+    regex.impulsivo <- "\\bthirty+(students?)?\\b|(?<![\\d.,])30(?!\\d)"
     result <- integer(length(risposta))
     for (i in seq_along(risposta)) {
       if (is.na(risposta[i]) && !na.rm) {
@@ -150,8 +152,8 @@ CRTlong <- function(item1 = NULL, item2 = NULL, item3 = NULL, item4 = NULL,
 
   CRTcoder6 <- function(risposta, na.rm) {
     risposta <- tolower(risposta)
-    regex.corretto <- "fifteen|15"
-    regex.impulsivo <- "twenty|20"
+    regex.corretto <- "\\bfifteen+(medals)?\\b|(?<![\\d.,])15(?!\\d)"
+    regex.impulsivo <- "\\btwenty+(medals)?\\b|(?<![\\d.,])20(?!\\d)"
     result <- integer(length(risposta))
     for (i in seq_along(risposta)) {
       if (is.na(risposta[i]) && !na.rm) {

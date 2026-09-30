@@ -1,5 +1,9 @@
 # reflectR NEWS
 
+## Version 2.2.0
+
+* Refined response recognition patterns across all functions for more precise matching of numbers and words and added validation of the 'codingscheme' argument. 
+
 ## Version 2.1.4
 
 * Revised DESCRIPTION and package-level help for clarity.

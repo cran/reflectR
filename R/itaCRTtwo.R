@@ -35,11 +35,13 @@
 
 itaCRTtwo <- function(item1 = NULL, item2 = NULL, item3 = NULL, item4 = NULL,
                      codingscheme = "categ", na.rm = TRUE) {
+  
+  codingscheme <- match.arg(codingscheme, c("categ", "sum", "mean"))
 
   CRTcoder1 <- function(risposta, na.rm) {
     risposta <- tolower(risposta)
-    regex.impulsivo <- "prim|1|uno|testa"
-    regex.corretto <- "second|2|due"
+    regex.corretto <- "\\bsecond|\\bdue+\\b|(?<![\\d.,])2(?!\\d)"
+    regex.impulsivo <- "\\bprim|\\buno\\b|\\btesta\\b|(?<![\\d.,])1(?!\\d)"
     result <- integer(length(risposta))
     for (i in seq_along(risposta)) {
       if (is.na(risposta[i]) && !na.rm) {
@@ -59,8 +61,8 @@ itaCRTtwo <- function(item1 = NULL, item2 = NULL, item3 = NULL, item4 = NULL,
 
   CRTcoder2 <- function(risposta, na.rm) {
     risposta <- tolower(risposta)
-    regex.impulsivo <- "sette|7"
-    regex.corretto <- "otto|8"
+    regex.corretto <- "\\botto+\\b|(?<![\\d.,])8(?!\\d)"
+    regex.impulsivo <- "\\bsette+\\b|(?<![\\d.,])7(?!\\d)"
     result <- integer(length(risposta))
     for (i in seq_along(risposta)) {
       if (is.na(risposta[i]) && !na.rm) {
@@ -80,8 +82,8 @@ itaCRTtwo <- function(item1 = NULL, item2 = NULL, item3 = NULL, item4 = NULL,
 
   CRTcoder3 <- function(risposta, na.rm) {
     risposta <- tolower(risposta)
-    regex.impulsivo <- "prim"
     regex.corretto <- "carlo"
+    regex.impulsivo <- "prim"
     result <- integer(length(risposta))
     for (i in seq_along(risposta)) {
       if (is.na(risposta[i]) && !na.rm) {
@@ -102,7 +104,7 @@ itaCRTtwo <- function(item1 = NULL, item2 = NULL, item3 = NULL, item4 = NULL,
   CRTcoder4 <- function(risposta, na.rm) {
     risposta <- tolower(risposta)
     regex.impulsivo <- "\\b[1-9]\\d*(\\.\\d+)?\\b|\\b0\\.\\d+\\b"
-    regex.corretto <- "zero|niente|nulla|vuot\\b|\\b0\\b"
+    regex.corretto <- "\\bzero\\b|\\bniente\\b|\\bnulla\\b|\\bvuot[oaie]?\\b|\\bnessun[oa]?\\b|\\b0\\b"
     result <- integer(length(risposta))
     for (i in seq_along(risposta)) {
       if (is.na(risposta[i]) && !na.rm) {
@@ -123,28 +125,23 @@ itaCRTtwo <- function(item1 = NULL, item2 = NULL, item3 = NULL, item4 = NULL,
   responses <- list(item1 = item1, item2 = item2, item3 = item3, item4 = item4)
   coded_responses <- list()
 
-  # Apply individual coding functions to string vectors
   if (!is.null(item1)) coded_responses$item1_coded <- CRTcoder1(item1, na.rm)
   if (!is.null(item2)) coded_responses$item2_coded <- CRTcoder2(item2, na.rm)
   if (!is.null(item3)) coded_responses$item3_coded <- CRTcoder3(item3, na.rm)
   if (!is.null(item4)) coded_responses$item4_coded <- CRTcoder4(item4, na.rm)
 
-  # For "sum" and "mean" coding schemes, also calculate binary correctness codings
   if (codingscheme %in% c("sum", "mean")) {
     binary_responses <- lapply(coded_responses, function(x) ifelse(x == 1, 1, ifelse(x == 0 | is.na(x), NA, 0)))
     names(binary_responses) <- sub("_coded", "_binary", names(binary_responses))
 
-    # Add any binary responses to the output
     coded_responses <- c(coded_responses, binary_responses)
 
-    # Convert binary_responses to a binary matrix for rowMeans and rowSums
     binary_matrix <- do.call(cbind, binary_responses)
 
-    # Calculate sum or mean vector
     if (codingscheme == "sum") {
       coded_responses$crt_sum <- rowSums(binary_matrix, na.rm = na.rm)
     } else if (codingscheme == "mean") {
-      # Calculate mean considering the actual number of questions answered
+
       coded_responses$crt_mean <- rowMeans(binary_matrix, na.rm = na.rm)
     }
   }
